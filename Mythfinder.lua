@@ -94,7 +94,7 @@ resetBtn:SetScript("OnLeave", function(self) self:SetBackdropColor(0.2, 0.2, 0.2
 
 local title = Mythfinder:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 title:SetPoint("TOP", 0, -10)
-title:SetText("Mythfinder by |cfff48cbaPinkpower|r ver.1.1")
+title:SetText("|cffFFFF00Myth|r|cffFF4500Finder|r by |cfff48cbaPinkpower|r ver.1.2")
 
 -----------------------------------------------------------------------------------------
 -------------------------СПИСОК ИНСТОВ---------------------------------------------------
@@ -229,7 +229,7 @@ resetBtn:SetScript("OnClick", function()
     UIDropDownMenu_SetText(dropdown, "Select Dungeon")
  --   boxMin:SetText("1") 
  --   boxMax:SetText("0")
-    print("|cff888888Mythfinder: Настройки сброшены|r")
+    print("|cffFFFF00Myth|r|cffFF4500Finder|r|cff00BFFF: Настройки сброшены / Settings reset.|r")
 end)
 
 -----------------------------------------------------------------------------------------
@@ -375,7 +375,7 @@ msgFrame:SetScript("OnHyperlinkClick", function(self, linkData)
   
         
         SendChatMessage(whisperMsg, "WHISPER", nil, player)
-        DEFAULT_CHAT_FRAME:AddMessage("|cff00fbff[Mythfinder]|r Sent to " .. player .. ": " .. whisperMsg)
+        DEFAULT_CHAT_FRAME:AddMessage("|cffFFFF00Myth|r|cffFF4500Finder|r |cff00BFFFSent to|r " .. player .. "|cff00BFFF:|r " .. whisperMsg)
     end
 end)
 
@@ -404,7 +404,7 @@ clearBtn:SetScript("OnLeave", function(self) self:SetBackdropColor(0.2, 0.2, 0.2
 
 clearBtn:SetScript("OnClick", function()
     msgFrame:Clear()
-    print("|cff888888Mythfinder: Окно сообщений очищено|r")
+    print("|cff888888Mythfinder: The message window has been cleared.|r")
 end)        
 
 -----------------------------------------------------------------------------------------
@@ -494,21 +494,41 @@ local aboutTitle = AboutFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLa
 aboutTitle:SetPoint("TOP", 0, -20)
 aboutTitle:SetText("|cfff48cbaMythfinder|r")
 
-local aboutText = AboutFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-aboutText:SetPoint("TOPLEFT", 20, -60)
-aboutText:SetWidth(410)
+local scrollFrame = CreateFrame("ScrollFrame", "MythfinderAboutScrollFrame", AboutFrame, "UIPanelScrollFrameTemplate")
+scrollFrame:SetPoint("TOPLEFT", 15, -60)
+scrollFrame:SetPoint("BOTTOMRIGHT", -35, 20)
+
+local scrollChild = CreateFrame("Frame")
+scrollFrame:SetScrollChild(scrollChild)
+scrollChild:SetWidth(380)
+scrollChild:SetHeight(1)
+
+local aboutText = scrollChild:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+aboutText:SetPoint("TOPLEFT", 0, 0)
+aboutText:SetWidth(380)
 aboutText:SetJustifyH("LEFT")
-aboutText:SetTextColor(0.7, 0.7, 0.7)
+aboutText:SetTextColor(0, 1, 1) 
 aboutText:SetText(
     "Этот аддон предназначен для удобного поиска групп в подземелья.\n\n" ..
-    "Автор: |cfff48cbaPinkpower|r\n" ..
-    "Версия: 1.05\n\n" ..
+    "|rАвтор: |cfff48cbaPinkpower|r\n" ..
+    "Версия: 1.2\n\n" ..
     "Особенности:\n" ..
     "- Автоматический расчет Item Level.\n" ..
     "- Быстрый отклик на объявления в чате.\n" ..
     "- Гибкая фильтрация по ролям и уровням.\n\n" ..
-    "|cff888888Нажмите в любое место или ESC, чтобы закрыть это окно.|r"
+    "|cffFFFFFFНажмите в любое место или ESC, чтобы закрыть это окно.|r" ..
+    "\n\n----------------------------------\n\n" ..
+    "This addon is designed to easily find groups for dungeons.\n\n" ..
+    "|rAuthor: |cfff48cbaPinkpower|r\n" ..
+    "Version: 1.2\n\n" ..
+    "Features:\n" ..
+    "- Automatic Item Level calculation.\n" ..
+    "- Quick response to chat announcements.\n" ..
+    "- Flexible filtering by roles and levels.\n\n" ..
+    "|cffFFFFFFClick anywhere or press ESC to close this window.|r"
 )
+
+scrollChild:SetHeight(aboutText:GetHeight())
 
 AboutFrame:EnableMouse(true)
 AboutFrame:SetScript("OnMouseDown", function(self) self:Hide() end)
@@ -516,7 +536,6 @@ AboutFrame:SetScript("OnMouseDown", function(self) self:Hide() end)
 AboutFrame:SetScript("OnShow", function(self)
     tinsert(UISpecialFrames, "MythfinderAboutFrame")
 end)
-
 -----------------------------------------------------------------------------------------
 -------------------------КНОПКА ОБ АДДОНЕ------------------------------------------------
 -----------------------------------------------------------------------------------------
@@ -533,7 +552,7 @@ aboutBtn:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
 
 local aboutBtnText = aboutBtn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 aboutBtnText:SetPoint("CENTER", 0, 0)
-aboutBtnText:SetText("Об аддоне")
+aboutBtnText:SetText("News")
 aboutBtnText:SetTextColor(0.8, 0.8, 0.8)
 
 aboutBtn:SetScript("OnEnter", function(self) self:SetBackdropColor(0.3, 0.3, 0.3, 1) end)
@@ -570,13 +589,13 @@ frame:SetScript("OnEvent", function(self, event)
         bossName = currentBoss
         startTime = GetTime()
         isFighting = true
-        SendChatMessage("Начало боя с: " .. bossName, "PARTY")
+        SendChatMessage("Boss fight: " .. bossName, "PARTY")
     
     elseif not currentBoss and isFighting then
         local duration = GetTime() - startTime
         local timeStr = string.format("%02d:%02d", math.floor(duration / 60), math.floor(duration % 60))
         
-        SendChatMessage("Бой закончен: " .. bossName .. " (" .. timeStr .. ")", "PARTY")
+        SendChatMessage("Boss fight end: " .. bossName .. " (" .. timeStr .. ")", "PARTY")
         
         bossName = nil
         isFighting = false
@@ -661,14 +680,14 @@ end)
 
 ------------------- проверка версиии аддона на гитхабе -----------------------------------
 
-local CURRENT_VERSION = "1.1" 
+local CURRENT_VERSION = "1.2" 
 local GITHUB_URL = "https://github.com/PinkpowerWOW/Mythfinder"
 
 local function PrintUpdateNotice(remoteVersion)
     local link = "|Hurl:"..GITHUB_URL.."|h|cff00ffff[GitHub: Mythfinder]|r|h"
     
-    print("|cffffff00[Mythfinder]|r Доступна новая версия: |cff00ff00" .. remoteVersion .. "|r")
-    print("Скачать обновление здесь: " .. link)
+    print("|cffFFFF00Myth|r|cffFF4500Finder|r |cff00BFFFДоступна новая версия / A new version is available:|r |cff00ff00" .. remoteVersion .. "|r")
+    print("|cff00BFFFСкачать обновление здесь / Download the update here:|r " .. link)
 end
 
 local originalOnHyperlinkClick = ChatFrame_OnHyperlinkShow
@@ -679,7 +698,7 @@ function ChatFrame_OnHyperlinkShow(chatFrame, link, text, button)
         ChatEdit_ActivateChat(editBox)
         editBox:SetText(url)
         editBox:HighlightText()
-        print("|cff00fbff[Mythfinder]|r Ссылка вставлена в чат. Нажмите |cff00ff00Ctrl+C|r, чтобы скопировать.")
+        print("|cffFFFF00Myth|r|cffFF4500Finder|r |cff00BFFFСсылка вставлена в чат. Нажмите|r |cff00ff00Ctrl+C|r|cff00BFFF, чтобы скопировать.|r")
     else
         
         if originalOnHyperlinkClick then
@@ -696,7 +715,7 @@ UpdateFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 UpdateFrame:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
     if event == "PLAYER_ENTERING_WORLD" then
-        print("|cff00ff00[Mythfinder]|r Загружен. Версия: " .. CURRENT_VERSION)
+        print("|cffFFFF00Myth|r|cffFF4500Finder|r |cff00BFFFЗагружен. Версия:|r " .. CURRENT_VERSION)
         C_Timer.After(5, function()
             local targetChannel = IsInRaid() and "RAID" or IsInGroup() and "PARTY" or IsInGuild() and "GUILD"
             if targetChannel then
@@ -719,3 +738,4 @@ UpdateFrame:SetScript("OnEvent", function(self, event, prefix, message, channel,
         end
     end
 end)
+
