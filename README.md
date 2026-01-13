@@ -1,10 +1,9 @@
 # Mythfinder (VER 1.2)
 
-- **RU** - Аддон для простого поиска m+ на сервере Ascension.
-- **EN** - An addon for easily searching for m+ on the Ascension server.
-
-- **RU** - После скачивания переименуйте папку Mythfinder-main в название Mythfinder.
-- **EN** - After downloading, rename the Mythfinder-main folder to Mythfinder.
+# Как скачать аддон? How to download the addon?
+- C правой стороны зелёная кнопка с надписью CODE / On the right side there is a green button with the inscription CODE.
+- Клик на неё и выбрать Download ZIP / Click on it and select Download ZIP.
+- После распаковать в папку игры \Interface\AddOns\ и переименовать в Mythfinder / After unzip it to the game folder \Interface\AddOns\ and rename it to Mythfinder.
 
 # **RU** - Особенности:
 - Лёгкий способ найти группу для прохождения m+.
