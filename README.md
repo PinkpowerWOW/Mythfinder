@@ -1,4 +1,4 @@
-# Mythfinder
+# Mythfinder (VER 1.2)
 
 - **RU** - Аддон для простого поиска m+ на сервере Ascension.
 - **EN** - An addon for easily searching for m+ on the Ascension server.
