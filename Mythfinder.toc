@@ -1,0 +1,4 @@
+## Interface: 30300
+## Title: |cffFFFF00Myth|r|cffFF4500Finder|r by |cfff48cbaPinkpower|r
+## Notes: Поиск мифического ключа. Author: |cfff48cbaPinkpower|r.
+Mythfinder.lua
